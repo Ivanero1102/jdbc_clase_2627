@@ -1,0 +1,25 @@
+2026-10-26 11:41:33,553 [main] ERROR es.ciudadescolar.util.DbManager          - Error durante la configuracion de la base de BD: conexion_muncial2026.properties (El sistema no puede encontrar el archivo especificado)
+2026-10-26 11:42:49,132 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[driver]=org.mariadb.jdbc.Driver
+2026-10-26 11:42:49,134 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[url]=jdbc:mariadb://192.168.203.112:3307/mundial2026
+2026-10-26 11:42:49,134 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[user]=alumno
+2026-10-26 11:42:49,135 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[password]=6
+2026-10-26 11:54:21,122 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[driver]=org.mariadb.jdbc.Driver
+2026-10-26 11:54:21,124 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[url]=jdbc:mariadb://192.168.203.112:3307/mundial2026
+2026-10-26 11:54:21,124 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[user]=alumno
+2026-10-26 11:54:21,125 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[password]=6
+2026-10-26 11:54:21,188 [main] DEBUG org.mariadb.jdbc.message.server.OkPacket - System variable change:  autocommit = ON
+2026-10-26 11:54:21,188 [main] DEBUG org.mariadb.jdbc.message.server.OkPacket - System variable change:  time_zone = SYSTEM
+2026-10-26 11:54:21,189 [main] DEBUG org.mariadb.jdbc.message.server.OkPacket - System variable change:  character_set_client = utf8mb4
+2026-10-26 11:54:21,189 [main] DEBUG org.mariadb.jdbc.message.server.OkPacket - System variable change:  character_set_connection = utf8mb4
+2026-10-26 11:54:21,189 [main] DEBUG org.mariadb.jdbc.message.server.OkPacket - System variable change:  character_set_results = utf8mb4
+2026-10-26 11:54:21,189 [main] DEBUG org.mariadb.jdbc.message.server.OkPacket - System variable change:  redirect_url = 
+2026-10-26 11:54:21,189 [main] DEBUG org.mariadb.jdbc.message.server.OkPacket - Database change: is 'mundial2026'
+2026-10-26 11:54:21,189 [main] DEBUG org.mariadb.jdbc.client.impl.StandardClient - execute query: set sql_mode=CONCAT(@@sql_mode,',STRICT_TRANS_TABLES'),session_track_system_variables = CONCAT(@@global.session_track_system_variables,',transaction_isolation')
+2026-10-26 11:54:21,194 [main] DEBUG es.ciudadescolar.util.DbManager          - Se ha establecido correctamente la conexion conta la BD
+2026-10-26 11:54:21,196 [main] DEBUG es.ciudadescolar.util.DbManager          - se ha cerrada correctamente la conexion con la BD
+2026-10-26 11:58:23,987 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[driver]=org.mariadb.jdbc.Driver
+2026-10-26 11:58:23,989 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[url]=jdbc:mariadb://192.168.203.112:3307/mundial2026
+2026-10-26 11:58:23,989 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[user]=alumno
+2026-10-26 11:58:23,989 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[password]=6
+2026-10-26 11:58:24,067 [main] DEBUG es.ciudadescolar.util.DbManager          - Se ha establecido correctamente la conexion conta la BD
+2026-10-26 11:58:24,070 [main] DEBUG es.ciudadescolar.util.DbManager          - se ha cerrada correctamente la conexion con la BD
