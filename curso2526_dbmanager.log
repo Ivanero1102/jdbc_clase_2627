@@ -23,3 +23,9 @@
 2026-10-26 11:58:23,989 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[password]=6
 2026-10-26 11:58:24,067 [main] DEBUG es.ciudadescolar.util.DbManager          - Se ha establecido correctamente la conexion conta la BD
 2026-10-26 11:58:24,070 [main] DEBUG es.ciudadescolar.util.DbManager          - se ha cerrada correctamente la conexion con la BD
+2026-10-28 12:34:31,124 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[driver]=org.mariadb.jdbc.Driver
+2026-10-28 12:34:31,126 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[url]=jdbc:mariadb://192.168.203.126:3307/mundial2026
+2026-10-28 12:34:31,126 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[user]=alumno
+2026-10-28 12:34:31,127 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[password]=6
+2026-10-28 12:34:36,205 [main] DEBUG es.ciudadescolar.util.DbManager          - Se ha establecido correctamente la conexion conta la BD
+2026-10-28 12:34:36,206 [main] DEBUG es.ciudadescolar.util.DbManager          - se ha cerrada correctamente la conexion con la BD

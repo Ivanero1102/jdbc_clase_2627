@@ -1,15 +1,21 @@
 package es.ciudadescolar.util;
 
+import java.sql.Statement;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import es.ciudadescolar.modelo.Entrenador;
 
 public class DbManager {
 
@@ -62,5 +68,39 @@ public class DbManager {
                 LOG.error("Error cerrando la BD: "+e.getMessage());
             }
         }
+    }
+
+    private List<Entrenador> getTodosEntrenadores(){
+        List<Entrenador> entrenadores = null;
+        Statement stEntrenadores = null;
+        ResultSet rstEntrenadores = null;
+        Entrenador entrenador = null;
+
+        if (conexion != null){
+            try {
+                stEntrenadores = conexion.createStatement();
+                rstEntrenadores = stEntrenadores.executeQuery(SQL.SELECT_ENTRENADORES);
+
+                if(rstEntrenadores.next()){
+                    entrenadores = new ArrayList<Entrenador>();
+                    do{
+                        entrenador = new Entrenador(rstEntrenadores.getInt(1), rstEntrenadores.getString(2), rstEntrenadores.getString(3));
+                        entrenadores.add(entrenador);
+                    }while(rstEntrenadores.next());
+                }
+            } catch (SQLException e) {
+                LOG.error("Error recuperando los entrenadores");
+            }finally{
+                if(rstEntrenadores != null && stEntrenadores != null){
+                    try {
+                        rstEntrenadores.close();
+                        stEntrenadores.close();
+                    } catch (Exception e) {
+                        LOG.error("Error cerrando resultset y/o statement");
+                    }
+                }
+            }
+        }
+        return entrenadores;
     }
 }
