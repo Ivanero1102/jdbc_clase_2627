@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class DbManager {
         }
     }
 
-    private List<Entrenador> getTodosEntrenadores(){
+    public List<Entrenador> getTodosEntrenadores(){
         List<Entrenador> entrenadores = null;
         Statement stEntrenadores = null;
         ResultSet rstEntrenadores = null;
@@ -103,4 +104,128 @@ public class DbManager {
         }
         return entrenadores;
     }
+
+    public List<Entrenador> getTodosEntrenadores2(){
+        List<Entrenador> entrenadores = null;
+        Entrenador entrenador = null;
+
+        if (conexion != null){
+
+            /* 
+            En este metodo hacemos lo mismo que en la opcion 1, pero usando try with resource
+            que cierra automaticamente los recursos intanciados dentro del try()
+            siemore que implementen la interfaz autoclosable()
+             */
+            try (Statement stEntrenadores = conexion.createStatement(); 
+                ResultSet rstEntrenadores = stEntrenadores.executeQuery(SQL.SELECT_ENTRENADORES);){
+
+                if(rstEntrenadores.next()){
+                    entrenadores = new ArrayList<Entrenador>();
+                    do{
+                        entrenador = new Entrenador(rstEntrenadores.getInt(1), rstEntrenadores.getString(2), rstEntrenadores.getString(3));
+                        entrenadores.add(entrenador);
+                    }while(rstEntrenadores.next());
+                }
+            } catch (SQLException e) {
+                LOG.error("Error recuperando los entrenadores");
+            }
+        }
+        return entrenadores;
+    }
+
+    public List<Entrenador> getEntrenadoresPorNombre(String nombreEntrenador){
+        List<Entrenador> entrenadoresPorNombre = null;
+        Entrenador entrenador = null;
+        PreparedStatement pstEntrenadoresNombre = null;
+        ResultSet rstEnternadoresNombre = null;
+        try {
+            pstEntrenadoresNombre = conexion.prepareStatement(SQL.SELECT_ENTRENADORES_POR_NOMBRE);
+            pstEntrenadoresNombre.setString(1, nombreEntrenador);
+            rstEnternadoresNombre = pstEntrenadoresNombre.executeQuery();
+            if(rstEnternadoresNombre.next()){
+                entrenadoresPorNombre = new ArrayList<Entrenador>();
+                do{
+                    entrenador = new Entrenador(rstEnternadoresNombre.getInt(1), rstEnternadoresNombre.getString(2), rstEnternadoresNombre.getString(3));
+                    entrenadoresPorNombre.add(entrenador);
+                }while(rstEnternadoresNombre.next());
+            }else{
+                LOG.warn("No se han encontrado entrenadores con nombre [" +nombreEntrenador+ "]");
+            }
+        } catch (SQLException e) {
+            LOG.error("Error durante la recuperacion de entrenadores por nombre [" +nombreEntrenador+"]" + e.getMessage());
+        } finally {
+            if(conexion != null && rstEnternadoresNombre != null && pstEntrenadoresNombre != null){
+                try {
+                    rstEnternadoresNombre.close();
+                    pstEntrenadoresNombre.close();
+                } catch (SQLException e) {
+                    LOG.error("Error durante la liberaciond de recursos durante la consulta de entrenadores por nombre");
+                }
+            }
+        }
+        return entrenadoresPorNombre;
+    }
+
+    public boolean altaNuevoEntrenador(String nombre, String nacionalidad){
+        boolean resultado = false;
+        int numRegistrosNuevos = -1;
+        try(PreparedStatement pstNuevoEntrenador = conexion.prepareStatement(SQL.INSERT_ENTRENADOR);){
+            pstNuevoEntrenador.setString(1, nombre);
+            pstNuevoEntrenador.setString(2, nacionalidad);
+            numRegistrosNuevos = pstNuevoEntrenador.executeUpdate();
+
+            if(numRegistrosNuevos == 1){
+                LOG.debug("La inserción se ha realziado correctamente");
+                resultado = true;
+            }else{
+                LOG.warn("La insercion no se ha llevado a cabo del entrenador ["+nombre+"] ["+nacionalidad+"]");
+            }
+        } catch (Exception e) {
+            LOG.error("Error durante la insercion de un nuevo entrenador ["+nombre+"] ["+nacionalidad+"]"+e.getMessage());
+        }
+
+        return resultado;
+    }
+
+    public boolean cambiarNacionalidadEntrenador(int id, String nacionalidad){
+        boolean resultado = false;
+        int numRegistrosNuevos = -1;
+        try(PreparedStatement pstActualizarEntrenador = conexion.prepareStatement(SQL.UPDATE_ENTRENADOR_NACIONALIDAD);){
+            pstActualizarEntrenador.setString(1, nacionalidad);
+            pstActualizarEntrenador.setInt(2, id);
+            numRegistrosNuevos = pstActualizarEntrenador.executeUpdate();
+
+            if(numRegistrosNuevos == 1){
+                LOG.debug("La actualizacion se ha realziado correctamente");
+                resultado = true;
+            }else{
+                LOG.warn("La actualizacion no se ha llevado a cabo del entrenador ["+id+"] ["+nacionalidad+"]");
+            }
+        } catch (Exception e) {
+            LOG.error("Error durante la actualizacion de un nuevo entrenador ["+id+"] ["+nacionalidad+"]"+e.getMessage());
+        }
+
+        return resultado;
+    }
+
+    public boolean borrarEntrenador(int id){
+    boolean resultado = false;
+    int numRegistrosNuevos = -1;
+        try(PreparedStatement pstBorrarEntrenador = conexion.prepareStatement(SQL.DELETE_ENTRENADOR);){
+            pstBorrarEntrenador.setInt(1, id);
+            numRegistrosNuevos = pstBorrarEntrenador.executeUpdate();
+
+            if(numRegistrosNuevos == 1){
+                LOG.debug("El borrado se ha realziado correctamente");
+                resultado = true;
+            }else{
+                LOG.warn("El borrado no se ha llevado a cabo del entrenador ["+id+"]");
+            }
+        } catch (Exception e) {
+            LOG.error("Error durante el borrado de un entrenador ["+id+"]"+e.getMessage());
+        }
+
+        return resultado;
+    }
+
 }
