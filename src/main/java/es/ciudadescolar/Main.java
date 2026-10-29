@@ -51,6 +51,15 @@ public class Main {
             LOG.warn("No se ha borrado el entrenador con id 64");
         }
 
+        if(db.generaReportePartidos(1)){
+            LOG.info("Se ha generado correctamente el reporte del equipo 1");
+        }else{
+            LOG.warn("No se ha generado el reporte");
+        }
+
+        String resultado=null;
+        db.getResultadoPartido(1, resultado);
+
         db.cerrarBD();
     }
 }

@@ -4,6 +4,7 @@ import java.sql.Statement;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -228,4 +229,27 @@ public class DbManager {
         return resultado;
     }
 
+    public boolean generaReportePartidos(int id_equipo){
+        boolean resultado = false;
+        try (CallableStatement cstReporte = conexion.prepareCall(SQL.SP_CALENDARIO_EQUIPO);){
+            cstReporte.setInt(1,id_equipo);
+            cstReporte.execute();
+            LOG.debug("Se ha invocado correctamente al procedimiento almacenado para general el reporte de partido");
+            resultado = true;
+        } catch (Exception e) {
+            LOG.error("Error durante la generacion del reporte de partidos para el equipo [" +id_equipo+ "]" +e.getMessage());
+        }
+        return resultado;
+    }
+
+    public String getResultadoPartido(int id_partido, String resultado){
+        try (CallableStatement cstResultado = conexion.prepareCall(SQL.FN_RESULTADO_PARTIDO)){
+            cstResultado.setString(1, resultado);
+            cstResultado.setInt(2, id_partido);
+            cstResultado.execute();
+        } catch (Exception e) {
+            
+        }
+        return resultado;
+    }
 }

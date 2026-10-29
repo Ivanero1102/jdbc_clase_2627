@@ -371,3 +371,11 @@
 2026-10-29 13:02:34,032 [main] DEBUG es.ciudadescolar.util.DbManager          - El borrado se ha realziado correctamente
 2026-10-29 13:02:34,033 [main] INFO  es.ciudadescolar.Main                    - El borrado se ha realziado correctamente del entrenador con id 64
 2026-10-29 13:02:34,034 [main] DEBUG es.ciudadescolar.util.DbManager          - se ha cerrada correctamente la conexion con la BD
+2026-10-29 13:23:18,703 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[driver]=org.mariadb.jdbc.Driver
+2026-10-29 13:23:18,705 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[url]=jdbc:mariadb://192.168.202.44:3307/mundial2026
+2026-10-29 13:23:18,705 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[user]=alumno
+2026-10-29 13:23:18,705 [main] DEBUG es.ciudadescolar.util.DbManager          - propiedad[password]=6
+2026-10-29 13:23:18,770 [main] DEBUG es.ciudadescolar.util.DbManager          - Se ha establecido correctamente la conexion conta la BD
+2026-10-29 13:23:18,780 [main] DEBUG es.ciudadescolar.util.DbManager          - Se ha invocado correctamente al procedimiento almacenado para general el reporte de partido
+2026-10-29 13:23:18,781 [main] INFO  es.ciudadescolar.Main                    - Se ha generado correctamente el reporte del equipo 1
+2026-10-29 13:23:18,782 [main] DEBUG es.ciudadescolar.util.DbManager          - se ha cerrada correctamente la conexion con la BD

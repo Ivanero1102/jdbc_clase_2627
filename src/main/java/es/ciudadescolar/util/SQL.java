@@ -7,5 +7,7 @@ public class SQL {
     protected static final String INSERT_ENTRENADOR = "INSERT INTO entrenadores(nombre, nacionalidad) VALUES (?,?)";
     protected static final String UPDATE_ENTRENADOR_NACIONALIDAD = "UPDATE entrenadores SET nacionalidad = ? WHERE id_entrenador = ?";
     protected static final String DELETE_ENTRENADOR = "DELETE FROM entrenadores WHERE id_entrenador = ?";
-    
+    protected static final String SP_CALENDARIO_EQUIPO = "{CALL sp_ObtenerCalendarioEquipo(?)}";
+    protected static final String FN_RESULTADO_PARTIDO = "{? = CALL fn_ObtenerResultadoPartido(?)}";
+
 }
