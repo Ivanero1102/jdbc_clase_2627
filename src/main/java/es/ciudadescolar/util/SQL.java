@@ -9,5 +9,8 @@ public class SQL {
     protected static final String DELETE_ENTRENADOR = "DELETE FROM entrenadores WHERE id_entrenador = ?";
     protected static final String SP_CALENDARIO_EQUIPO = "{CALL sp_ObtenerCalendarioEquipo(?)}";
     protected static final String FN_RESULTADO_PARTIDO = "{? = CALL fn_ObtenerResultadoPartido(?)}";
+    
+    protected static final String INSERT_EQUIPO = "INSERT INTO Equipos(nombre, grupo, confederacion) VALUES (?,?,?)";
+    protected static final String INSERT_ENTRENADOR_EQUIPO = "INSERT INTO Entrenadores(nombre, nacionalidad, id_equipo) VALUES (?,?,?)";
 
 }

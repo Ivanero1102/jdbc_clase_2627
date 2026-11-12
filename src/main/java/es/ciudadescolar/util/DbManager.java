@@ -266,4 +266,61 @@ public class DbManager {
         }
         return resultado;
     }
+    
+    /**
+     * Este método debe dar de alta un equipo y a su entrenador (transaccionalmente)
+     * @return si ha ido bien o no el alta
+     */
+    public boolean altaEquipo(String nomEq, char gruEq, String confEq, String nomEnt, String nacEnt){
+        boolean estado = false;
+        int idEquipo;
+        PreparedStatement pstEquipo, pstEntrenador;
+        try {
+            conexion.setAutoCommit(false);
+
+            pstEquipo = conexion.prepareStatement(SQL.INSERT_EQUIPO, Statement.RETURN_GENERATED_KEYS);
+            pstEquipo.setString(1, nomEq);
+            pstEquipo.setString(2, String.valueOf(gruEq));
+            pstEquipo.setString(3, confEq);
+
+            if(pstEquipo.executeUpdate() == 1){
+                ResultSet rstNuevoEquipo = pstEquipo.getGeneratedKeys();
+                if(rstNuevoEquipo.next()){
+                    idEquipo = rstNuevoEquipo.getInt(1);
+                    pstEntrenador = conexion.prepareStatement(SQL.INSERT_ENTRENADOR_EQUIPO);
+                    pstEntrenador.setString(1, nomEnt);
+                    pstEntrenador.setString(2, nacEnt);
+                    pstEntrenador.setInt(3, idEquipo);
+                    if(pstEntrenador.executeUpdate()==1){
+                        LOG.debug("Alta correcta del entrenador");
+                        conexion.commit();
+                        estado = true;
+                    }else{
+                        throw new SQLException("No se pudo dar de alta el nuevo entrenador");
+                    }
+                }else{
+                    throw new SQLException("No se pudo recuperar el id del equipo insertado");
+                }
+            }else{
+                throw new SQLException("No se pudo dar de alta el nuevo equipo");
+            }
+        } catch (SQLException e) {
+            LOG.error("Error durante el alta de equipo y entrenador" +e.getMessage());
+            try {
+                conexion.rollback();
+                LOG.debug("Se ha realizado el rollback de la operacion transaccional");
+            } catch (SQLException e1) {
+                LOG.error("Rollback fallido: "+e.getMessage());
+            }
+        } finally {
+            try {
+                conexion.setAutoCommit(true);
+                LOG.debug("Se ha restituido correctamente el autocommit");
+            } catch (Exception e) {
+                LOG.error("Error restituyendo el autocommit en la conexion"+e.getMessage());
+            }
+        }
+        
+        return estado;
+    }
 }
