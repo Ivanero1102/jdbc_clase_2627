@@ -1,6 +1,7 @@
 package es.ciudadescolar.util;
 
 import java.sql.Statement;
+import java.sql.Types;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -242,13 +243,26 @@ public class DbManager {
         return resultado;
     }
 
-    public String getResultadoPartido(int id_partido, String resultado){
-        try (CallableStatement cstResultado = conexion.prepareCall(SQL.FN_RESULTADO_PARTIDO)){
-            cstResultado.setString(1, resultado);
-            cstResultado.setInt(2, id_partido);
-            cstResultado.execute();
-        } catch (Exception e) {
+    public String getResultadoPartido(int id_partido){
+        String resultado = null;
+        try (CallableStatement cstFunResultado = conexion.prepareCall(SQL.FN_RESULTADO_PARTIDO)){
+            // Al tratarse de una funcion tendremos siempre que devolver un valor
+            // Tenemos que registrarlo junto con su tipo antes de invocar la funcion
+            // Como nuestra funcion devuelve un VARCHAR, tendre que fijar ese tipo
+            cstFunResultado.registerOutParameter(1, Types.VARCHAR);
+
+            //Atencion si tengo un SP con parametros de Out o IN/OUT tendria que registrarlos asi tambien
+
+            cstFunResultado.setInt(2, id_partido);
+
+            // Ejecutamos funcion
+            cstFunResultado.execute();
+
+            //Recuperamos el valor devueltopor la funcion
+            resultado = cstFunResultado.getString(1);
             
+        } catch (Exception e) {
+            LOG.error("Error durante la invocacion a la funcion: "+e.getMessage());
         }
         return resultado;
     }

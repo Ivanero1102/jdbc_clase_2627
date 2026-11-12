@@ -57,9 +57,12 @@ public class Main {
             LOG.warn("No se ha generado el reporte");
         }
 
-        String resultado=null;
-        db.getResultadoPartido(1, resultado);
-
+        int idPartido = 16;
+        String resultado = db.getResultadoPartido(idPartido);
+        if(resultado != null)
+            LOG.info("El resultado del partido ["+idPartido+" es "+resultado+"]");
+        else
+            LOG.warn("Ha fallado la consulta de resultado del partido [" +idPartido+ "]");
         db.cerrarBD();
     }
 }
